@@ -31,9 +31,9 @@ export default function Column() {
                 <FilterOptions label = "Name"/>
                 </Stack>
             </div>
-            <Item><Element namePatient="Ariana Ayaviri" statusPatient = "diabled"/></Item>
-            <Item><Element namePatient="Rosa Clavel" statusPatient = "diabled"/></Item>
-            <Item><Element namePatient="Maria Gonzalez" statusPatient = "diabled"/></Item>            
+            <Item><Element namePatient="Ariana Ayaviri" statusPatient = "Rejected"/></Item>
+            <Item><Element namePatient="Rosa Clavel" statusPatient = "Done"/></Item>
+            <Item><Element namePatient="Maria Gonzalez" statusPatient = "Done"/></Item>            
         </Grid>
         
         <Grid xs={6}>
@@ -44,8 +44,8 @@ export default function Column() {
                 <FilterOptions label = "Name"/>
                 </Stack>
             </div>
-            <Item><Element namePatient="Ariana Ayaviri" statusPatient = "diabled"/></Item>
-            <Item><Element namePatient="Aretingo" statusPatient = "diabled"/></Item>
+            <Item><Element namePatient="Ariana Ayaviri" statusPatient = "Done"/></Item>
+            <Item><Element namePatient="Aretingo" statusPatient = "Done"/></Item>
         </Grid>
       </Grid>
     </Box>

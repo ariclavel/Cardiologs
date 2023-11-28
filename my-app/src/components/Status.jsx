@@ -10,34 +10,30 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogTitle from '@mui/material/DialogTitle';
 
 export default function Status({statusPatient}) {
-  const [invisible, setInvisible] = React.useState(false);
+//Pending + Rejected and Done to initialize the slider
+  const hashValues = {"Pending": true,  "Rejected":true, "Done":false}
+  const [invisible, setInvisible] = React.useState(hashValues[statusPatient]);
+  //Open and close Dialog to validate changes
   const [open, setOpen] = React.useState(false);
   const handleBadgeVisibility = () => {
     setOpen(true);
-    
   };
-
+  //On change if user is agree we change it and close Dialog
   const handleAgree = () =>{
     setInvisible(!invisible);
     setOpen(false);
   }
+  //Otherway we just close Dialog
   const handleDisagree = ()=>{
     setOpen(false);
   }
   
-
   return (
     <Box
       sx={{
         color: 'action.active',
         display: 'flex',
-        flexDirection: 'column',
-        '& > *': {
-          marginBottom: 2,
-        },
-        '& .MuiBadge-root': {
-          marginRight: 4,
-        },
+        flexDirection: 'column'
       }}
     >
       <div>
