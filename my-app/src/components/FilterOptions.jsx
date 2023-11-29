@@ -3,29 +3,51 @@ import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import { Box } from '@mui/system';
 import Loading from './Loading';
-import { useStatus } from './Column';
-export default function FilterOptions({dataFilter,label,k}) {
-  //USE CONTEXT
-  const { waitingFor } = useStatus();
-  const { done } = useStatus();
-  const { setWaitingFor } = useStatus();
-  const { setDone } = useStatus();
-  //variables
+
+export default function FilterOptions({dataFilter,label,k,action}) {
+  //variables);
   const [selectedValue, setSelectedValue] = React.useState(null);
+
+  const dataFiltration = () =>{
+    let s = dataFilter.map((element)=>{
+      for(let i of element.arrhythmias){
+          return i;
+      } 
+    });
+    let set = new Set(s);
+    return Array.from(set);
+  }
+
   const handleChange = (event, newValue) => {
     setSelectedValue(newValue);
-    console.log(selectedValue);
+    
+    let dummy = dataFilter.map((element)=>{
+      element['visibility'] = true;
+      return element;
+    });
+    action(dummy);
     if(newValue){
-      console.log(newValue)
-      if(k == "patient_name"){
-        let dummy = done.map((element)=>{
-          if(!element.patient_name.startsWith(newValue)){
-            const dArray = [...done, { ...element, ['visibility']: false }];
-            //setDone(dArray);
+      //if it is about the name
+      if(k=="patient_name"){
+        let dummy = dataFilter.map((element)=>{
+          if(element.patient_name!=newValue){
+            element['visibility'] = false;
           }
           return element;
-        })
-        setDone(dummy);
+        });
+        action(dummy);
+      }
+      
+      //about the arrhythmias
+      else{
+        let dummy = dataFilter.map((element)=>{
+          let set = new Set(element.arrhythmias);
+          if(!set.has(newValue)){
+            element['visibility'] = false;
+          }
+          return element;
+        });
+        action(dummy);  
       }
      
     }
@@ -39,15 +61,11 @@ export default function FilterOptions({dataFilter,label,k}) {
         <Autocomplete
             value={selectedValue}
             onChange={handleChange}
-            options={k!="patient_name"?dataFilter.map((element)=>{
+            options={k=="patient_name"?dataFilter.map((element)=>{
               return element.patient_name;
-            }):dataFilter.map((element)=>{
-              for(let i of element.arrhythmias){
-                return i;
-              } 
-            })}
+            }):dataFiltration()}
             component="div"
-            sx={{ marginLeft:5 }}
+            sx={{ marginLeft:6, bgcolor: 'white' }}
             renderInput={(params) => <TextField {...params} label={label} />}
         />
       ):

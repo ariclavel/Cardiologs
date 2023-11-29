@@ -41,8 +41,8 @@ export default function Column({cards}) {
         <Title title = "To Do" />
             <div>
                 <Stack direction="row" spacing={2}>
-                <FilterOptions dataFilter={waitingFor} k="patient_name" label = "Arythmias"/>
-                <FilterOptions dataFilter={waitingFor} k="arr" label = "Name"/>
+                <FilterOptions dataFilter={waitingFor} action ={setWaitingFor} k="arr" label = "Arythmias"/>
+                <FilterOptions dataFilter={waitingFor} action ={setWaitingFor} k="patient_name" label = "Name"/>
                 </Stack>
             </div>
             <div>
@@ -56,8 +56,8 @@ export default function Column({cards}) {
         <Title title = "Done" />
             <div>
                 <Stack direction="row" spacing={2}>
-                <FilterOptions  dataFilter={waitingFor} k="patient_name" label = "Arythmias"/>
-                <FilterOptions  dataFilter={waitingFor} k="arr" label = "Name"/>
+                <FilterOptions  dataFilter={done} action ={setDone} k="arr" label = "Arythmias"/>
+                <FilterOptions  dataFilter={done} action ={setDone} k="patient_name" label = "Name"/>
                 </Stack>
             </div>
             {done.filter(element => element.visibility).map((element)=>{

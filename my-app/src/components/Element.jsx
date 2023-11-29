@@ -10,7 +10,7 @@ export default function Element({statusPatient,namePatient,date,arr,id}) {
   const [show,setShow] = React.useState(false);
   const showList=()=>{
     if(show){
-        return(<ListArrhythmias arr ={arr} />);
+        return(<ListArrhythmias key={id} id={id} arr ={arr} />);
     }
   }
   const handleClick = ()=>{
@@ -32,7 +32,7 @@ export default function Element({statusPatient,namePatient,date,arr,id}) {
         {namePatient}
         </Button>
         <p>{date}</p>
-        <Status statusPatient={statusPatient}  id={id} />
+        <Status  statusPatient={statusPatient}  id={id} />
         {showList()}
         </div>
         <div>

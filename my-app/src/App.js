@@ -13,11 +13,11 @@ function App() {
       .then(resp => resp.json())
       .then(data => {
         setCards(data);
-        console.log(cards);
       })
     }
     catch(err){
       console.log(err);
+      //return (<Loading/>);
     } 
     
   }, [])

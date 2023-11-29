@@ -5,7 +5,7 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 
-export default function ListArrhythmias({arr}) { 
+export default function ListArrhythmias({arr,id}) { 
   return (
     <Box
       sx={{
@@ -19,9 +19,9 @@ export default function ListArrhythmias({arr}) {
       <List>
           {arr.map((element)=>{
             return(
-              <ListItem disablePadding>
-              <ListItemButton>
-                <ListItemText primary={element} />
+              <ListItem key={id+element} disablePadding>
+              <ListItemButton key={id+element}>
+                <ListItemText key={id+element} primary={element} />
               </ListItemButton>
               </ListItem>
             )
