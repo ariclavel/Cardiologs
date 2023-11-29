@@ -3,51 +3,72 @@ import { styled } from '@mui/material/styles';
 import Grid from '@mui/material/Unstable_Grid2';
 import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
-import { color } from '@mui/system';
 import Element from './Element';
 import Title from './Title';
 import FilterOptions from './FilterOptions';
-import Stack from '@mui/material/Stack';;
+import Stack from '@mui/material/Stack';
+import { useEffect,useContext } from 'react';
 
 const Item = styled(Paper)(({ theme }) => ({
-  backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
-  ...theme.typography.body2,
   padding: theme.spacing(1),
   margin: 50,
-  textAlign: 'center',
-  color: theme.palette.text.secondary,
+  textAlign: 'center'
 }));
-
-export default function Column() {
+const ContextCards = React.createContext();
+export default function Column({cards}) {
+  const [done,setDone] = React.useState([]);
+  const [waitingFor,setWaitingFor] = React.useState([]);
+  
+  useEffect(()=>{
+    let dummy = cards.filter((element)=>{
+        element['visibility'] = true;
+        return element.status == "DONE";
+    })
+    setDone(dummy);
+    dummy = [];
+    dummy = cards.filter((element)=>{
+      element['visibility'] = true;
+      return element.status != "DONE";
+    })
+    setWaitingFor(dummy);
+  },[]);
   return (
+    <ContextCards.Provider value={{done,waitingFor,setDone, setWaitingFor}}>
+  
     <Box sx={{ width: '100%', bgcolor: '#6693F5' }}>
       <Grid container rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-        
         <Grid xs={6}>
         <Title title = "To Do" />
             <div>
                 <Stack direction="row" spacing={2}>
-                <FilterOptions label = "Arythmias"/>
-                <FilterOptions label = "Name"/>
+                <FilterOptions dataFilter={waitingFor} k="patient_name" label = "Arythmias"/>
+                <FilterOptions dataFilter={waitingFor} k="arr" label = "Name"/>
                 </Stack>
             </div>
-            <Item><Element namePatient="Ariana Ayaviri" statusPatient = "Rejected"/></Item>
-            <Item><Element namePatient="Rosa Clavel" statusPatient = "Done"/></Item>
-            <Item><Element namePatient="Maria Gonzalez" statusPatient = "Done"/></Item>            
+            <div>
+            {waitingFor.filter(element => element.visibility).map((element)=>{
+              return(<Item key ={element.id}><Element key ={element.id} id={element.id} namePatient={element.patient_name} statusPatient ={element.status} date ={element.created_date.replace('T',' ').slice(0,19)} arr={element.arrhythmias} /></Item>)
+            })}
+            </div>          
         </Grid>
         
         <Grid xs={6}>
         <Title title = "Done" />
             <div>
                 <Stack direction="row" spacing={2}>
-                <FilterOptions label = "Arythmias"/>
-                <FilterOptions label = "Name"/>
+                <FilterOptions  dataFilter={waitingFor} k="patient_name" label = "Arythmias"/>
+                <FilterOptions  dataFilter={waitingFor} k="arr" label = "Name"/>
                 </Stack>
             </div>
-            <Item><Element namePatient="Ariana Ayaviri" statusPatient = "Done"/></Item>
-            <Item><Element namePatient="Aretingo" statusPatient = "Done"/></Item>
+            {done.filter(element => element.visibility).map((element)=>{
+              return(<Item key ={element.id}><Element  key ={element.id} id={element.id} namePatient={element.patient_name} statusPatient ={element.status} date ={element.created_date.replace('T',' ').slice(0,19)} arr={element.arrhythmias}/></Item>)
+            })}
         </Grid>
       </Grid>
     </Box>
+    </ContextCards.Provider>
   );
+}
+export function useStatus() {
+  return useContext(ContextCards);
 }

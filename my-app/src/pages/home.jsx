@@ -1,17 +1,21 @@
 import React from "react";
 import Column from "../components/Column";
-export default function Home(){
-    /*async function logMovies() {
-        const response = await fetch("https://github.com/CardioLogs/card-triage/blob/master/server/cards.json");
-        const movies = await response.json();
-        console.log(movies);
-        //return(movies)
-    }*/
-      
+import { Box } from "@mui/system";
+import Loading from "../components/Loading";
+
+export default function Home({cards}){
     return (
         <div>
-          <h1>Welcome to my app</h1>
-          <Column/>
+        {cards?
+        (<div>
+            <Box sx={{ marginLeft:15, textAlign: 'center', color: '#6693F5'}}>
+            <   h1>Patients </h1>
+            </Box>
+            <Column cards ={cards} />
+        </div>
+        ):
+        (<Loading/>)
+        }
         </div>
     );
 }

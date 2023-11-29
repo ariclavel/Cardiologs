@@ -5,33 +5,28 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemText from '@mui/material/ListItemText';
 
-export default function ListArrhythmias() { 
+export default function ListArrhythmias({arr}) { 
   return (
     <Box
       sx={{
         color: 'action.active',
         display: 'flex',
         flexDirection: 'column',
-        '& > *': {
-          marginBottom: 2,
-        },
-        '& .MuiBadge-root': {
-          marginRight: 4,
-        },
+        
       }}
     >
       <div>
       <List>
-          <ListItem disablePadding>
-            <ListItemButton>
-              <ListItemText primary="Trash" />
-            </ListItemButton>
-          </ListItem>
-          <ListItem disablePadding>
-            <ListItemButton component="a" href="#simple-list">
-              <ListItemText primary="Spam" />
-            </ListItemButton>
-          </ListItem>
+          {arr.map((element)=>{
+            return(
+              <ListItem disablePadding>
+              <ListItemButton>
+                <ListItemText primary={element} />
+              </ListItemButton>
+              </ListItem>
+            )
+          })}
+          
         </List>
       </div>
       
