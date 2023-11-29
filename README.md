@@ -1,5 +1,5 @@
 # Cardiologs
-Prototype of a screen of a WebApp (part of the hiring process of Philips)
+Prototype of a screen of a WebApp 
 
 
 install packages:
